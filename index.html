@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imperial Earth Calendar - Puzzle Solver</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Archivo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+    <div class="grain-overlay"></div>
+    
+    <div class="container">
+        <header class="header">
+            <h1 class="title">Imperial Earth Calendar Puzzle</h1>
+            <p class="subtitle">Computational Puzzle Solver</p>
+        </header>
+        
+        <div class="layout">
+            <!-- Left Panel: date selection & controls -->
+            <aside class="control-panel">
+                <h2 class="section-title">Date Configuration</h2>
+                
+                <div class="date-control">
+                    <label class="control-label">Month</label>
+                    <div class="date-nav">
+                        <button class="nav-btn" onclick="changeMonth(-1)" aria-label="Previous month">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <span class="date-display" id="month-display">JAN</span>
+                        <button class="nav-btn" onclick="changeMonth(1)" aria-label="Next month">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="date-control">
+                    <label class="control-label">Day</label>
+                    <div class="date-nav">
+                        <button class="nav-btn" onclick="changeDay(-1)" aria-label="Previous day">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <span class="date-display" id="day-display">1</span>
+                        <button class="nav-btn" onclick="changeDay(1)" aria-label="Next day">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="date-control">
+                    <label class="control-label">Weekday</label>
+                    <div class="date-nav">
+                        <button class="nav-btn" onclick="changeWeekday(-1)" aria-label="Previous weekday">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <span class="date-display" id="weekday-display">SUN</span>
+                        <button class="nav-btn" onclick="changeWeekday(1)" aria-label="Next weekday">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="action-section">
+                    <button class="btn btn-primary" onclick="solve()" id="solve-btn">
+                        <span class="btn-text">Solve Puzzle</span>
+                    </button>
+                    <button class="btn btn-secondary" onclick="hint()" id="hint-btn" disabled>
+                        <span class="btn-text" id="hint-text">Hint (0/0)</span>
+                    </button>
+                    <button class="btn btn-secondary" onclick="showAll()" id="show-all-btn" disabled>
+                        <span class="btn-text">Show All</span>
+                    </button>
+                    <button class="btn btn-outline" onclick="clearBoard()">
+                        <span class="btn-text">Clear Board</span>
+                    </button>
+                    
+                    <div id="message" class="message"></div>
+                </div>
+            </aside>
+            
+            <!-- Center: board -->
+            <main class="board-wrapper">
+                <div class="board" id="board"></div>
+            </main>
+            
+            <!-- Right Panel: instructions -->
+            <aside class="info-panel">
+                <h3 class="section-title">Instructions</h3>
+                <ol class="info-list">
+                    <li>Select your target date using the navigation controls</li>
+                    <li>Click "Solve Puzzle" to compute the solution</li>
+                    <li>Use "Hint" to reveal pieces incrementally</li>
+                    <li>Use "Show All" to display the complete solution</li>
+                    <li>Click "Clear Board" to reset</li>
+                </ol>
+                
+                <div class="divider"></div>
+                
+                <div class="legend">
+                    <h4 class="legend-title">Board Legend</h4>
+                    <div class="legend-item">
+                        <div class="legend-cell target-cell"></div>
+                        <span>Selected date</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-cell piece-cell"></div>
+                        <span>Solution pieces</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-cell empty-cell"></div>
+                        <span>Empty space</span>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <script src="assets/dlx.js"></script>
+    <script src="assets/solver.js"></script>
+    <script src="assets/app.js"></script>
+</body>
+</html>
