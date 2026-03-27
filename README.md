@@ -1,6 +1,6 @@
 # Imperial Earth Calendar Puzzle Solver
 
-A solver for the **Imperial Earth Calendar Puzzle**.
+A solver for the **Imperial Earth Calendar Puzzle**,  a.k.a. “A-Puzzle-A-Day”.
 
 🔗 **[Try it live](https://yiz-bit.github.io/imperial-earth-calendar-solver/)**
 
